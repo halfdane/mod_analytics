@@ -40,9 +40,8 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           # Optional, literal inventory file contents
           inventory: |
-            [all]
-            83.229.85.245
           # Optional, additional flags to pass to ansible-playbook
           options: |
+            -u root
             --extra-vars hello=there
             --verbose
