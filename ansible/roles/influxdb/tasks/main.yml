@@ -8,16 +8,6 @@
 - name: Install InfluxDB packages
   apt: name=influxdb state=present
 
-- name: Modify InfluxDB hostname
-  replace:
-    dest=/etc/influxdb/influxdb.conf
-    regexp='# auth-enabled = false'
-    replace='auth-enabled = true'
-    backup=yes
-
-- name: Start the InfluxDB service
-  service: name=influxdb state=restarted
-
 - name: Create admin user
   command: /usr/bin/influx -execute "CREATE USER admin WITH PASSWORD '{{ INFLUXDB_ROOT_PASSWORD }}' WITH ALL PRIVILEGES"
 
@@ -26,6 +16,17 @@
 
 - name: Create python user
   command: /usr/bin/influx -execute "CREATE USER write_data WITH PASSWORD '{{ INFLUXDB_WRITE_DATA_PASSWORD }}'"
+
+
+- name: Activate InfluxDB authentication
+  replace:
+    dest=/etc/influxdb/influxdb.conf
+    regexp='# auth-enabled = false'
+    replace='auth-enabled = true'
+    backup=yes
+
+- name: Start the InfluxDB service
+  service: name=influxdb state=restarted
 
 - name: Create sample database
   command: /usr/bin/influx -execute 'CREATE DATABASE sample_database'
