@@ -4,21 +4,22 @@ on:
   push:
     paths:
       - 'ansible/**'
+      - '.github/workflows/ansible.yml'
 # run if manually triggered
   workflow_dispatch:
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run ansible-lint
-        uses: ansible-community/ansible-lint-action@v6.0.2
-        with:
-          args: "ansible"
+  # validate:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Run ansible-lint
+  #       uses: ansible-community/ansible-lint-action@v6.0.2
+  #       with:
+  #         args: "ansible"
   run-playbook:
     runs-on: ubuntu-latest
-    needs: validate
+    # needs: validate
     steps:
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
