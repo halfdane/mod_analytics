@@ -10,7 +10,7 @@
 
 - name: Modify InfluxDB hostname
   replace:
-    dest=/etc/opt/influxdb/influxdb.conf
+    dest=/etc/influxdb/influxdb.conf
     regexp='hostname = "localhost"'
     replace='hostname = "{{ ansible_hostname }}"'
     backup=yes
