@@ -6,6 +6,6 @@
 
   roles:
     - influxdb
-    # - grafana
+    - grafana
     # - nginx
     # - python-server-metrics
