@@ -20,20 +20,6 @@ jobs:
         with:
           args: "ansible" # my ansible files in a folder
   run-playbook:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-      # The validate Job need to be sucessfull
-      needs: [ validate ]
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install dependencies Including Ansible
-        run: |
-          cd ansible
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
+      - run: echo "henlo owrld"
