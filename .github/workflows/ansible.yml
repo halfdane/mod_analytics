@@ -30,24 +30,24 @@ jobs:
         with:
           python-version: 3.9
       - name: Run playbook
-      uses: dawidd6/action-ansible-playbook@v2
-      with:
-        # Required, playbook filepath
-        playbook: hello-world.yaml
-        # Optional, directory where playbooks live
-        directory: ./ansible
-        # Optional, SSH private key
-        key: ${{secrets.SSH_KEY}}
-        # Optional, literal inventory file contents
-        inventory: |
-          [all]
-          example.com
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: hello-world.yaml
+          # Optional, directory where playbooks live
+          directory: ./ansible
+          # Optional, SSH private key
+          key: ${{secrets.SSH_KEY}}
+          # Optional, literal inventory file contents
+          inventory: |
+            [all]
+            example.com
 
-          [group1]
-          example.com
-        # Optional, additional flags to pass to ansible-playbook
-        options: |
-          --inventory .hosts
-          --limit group1
-          --extra-vars hello=there
-          --verbose
+            [group1]
+            example.com
+          # Optional, additional flags to pass to ansible-playbook
+          options: |
+            --inventory .hosts
+            --limit group1
+            --extra-vars hello=there
+            --verbose
