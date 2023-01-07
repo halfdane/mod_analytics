@@ -1,0 +1,12 @@
+---
+- name: main task
+  hosts: all
+  vars_files:
+    - vars/external_vars.yml
+  sudo: yes
+
+  roles:
+    - influxdb
+    # - grafana
+    # - nginx
+    # - python-server-metrics

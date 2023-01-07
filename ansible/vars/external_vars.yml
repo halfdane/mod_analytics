@@ -1,0 +1,24 @@
+---
+# Password for your InfluxDB root user
+INFLUXDB_ROOT_PASSWORD: 'root'
+
+# Database that will hold your Django project's metrics
+INFLUXDB_DATABASE: 'project'
+
+# User that will connect to above database
+INFLUXDB_USER: 'project'
+
+# Password for the above user
+INFLUXDB_PASSWORD: 'project'
+
+# Password for the grafana user who will connect to the grafana database
+INFLUXDB_GRAFANA_PASSWORD: 'grafana'
+
+# Version of grafana you want to install
+GRAFANA_SOURCE_FILENAME: 'grafana-1.8.1'
+
+# Port for grafana nginx virtual server
+GRAFANA_NGINX_PORT: 80
+
+# Basic HTTP AUTH password for the grafana frontent (username is grafana)
+HTPASSWD_GRAFANA_PASSWORD: 'grafana'
