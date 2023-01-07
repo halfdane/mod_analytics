@@ -19,11 +19,8 @@ jobs:
         uses: ansible-community/ansible-lint-action@v6.0.2
         with:
           args: "ansible" # my ansible files in a folder
-
   run-playbook:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-		# The validate Job need to be sucessfull
 		needs: [ validate ]
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
