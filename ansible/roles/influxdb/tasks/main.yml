@@ -8,15 +8,41 @@
 - name: Install InfluxDB packages
   apt: name=influxdb state=present
 
+- name: Activate InfluxDB authentication
+  replace:
+    dest=/etc/influxdb/influxdb.conf
+    regexp='auth-enabled = true'
+    replace='# auth-enabled = false'
+    backup=yes
+
+- name: Start the InfluxDB service
+  service: name=influxdb state=restarted
+
+- name: Create sample database
+  command: /usr/bin/influx -execute 'CREATE DATABASE sample_database' -username admin -password {{ INFLUXDB_ROOT_PASSWORD }}
+
+- name: Load some test data into sample database
+  uri:
+    url: http://localhost:8086/write?db=sample_database&u=admin&p={{ INFLUXDB_ROOT_PASSWORD }}
+    method: POST
+    body: "random_ints,host=server_{{ 10 | random }} value={{ 100 | random }}"
+    status_code: 204
+  with_sequence: start=1 end=10
+
+gstt
+
 - name: Create admin user
   command: /usr/bin/influx -execute "CREATE USER admin WITH PASSWORD '{{ INFLUXDB_ROOT_PASSWORD }}' WITH ALL PRIVILEGES"
 
 - name: Create grafana user
   command: /usr/bin/influx -execute "CREATE USER grafana WITH PASSWORD '{{ INFLUXDB_GRAFANA_PASSWORD }}'"
+  command: /usr/bin/influx -execute "GRANT READ ON sample_database TO grafana"
+  
 
 - name: Create python user
   command: /usr/bin/influx -execute "CREATE USER write_data WITH PASSWORD '{{ INFLUXDB_WRITE_DATA_PASSWORD }}'"
-
+  command: /usr/bin/influx -execute "GRANT WRITE ON sample_database TO write_data"
+  command: /usr/bin/influx -execute "GRANT READ ON sample_database TO write_data"
 
 - name: Activate InfluxDB authentication
   replace:
@@ -27,14 +53,3 @@
 
 - name: Start the InfluxDB service
   service: name=influxdb state=restarted
-
-- name: Create sample database
-  command: /usr/bin/influx -execute 'CREATE DATABASE sample_database'
-
-- name: Load some test data into sample database
-  uri:
-    url: http://localhost:8086/write?db=sample_database
-    method: POST
-    body: "random_ints,host=server_{{ 10 | random }} value={{ 100 | random }}"
-    status_code: 204
-  with_sequence: start=1 end=10
