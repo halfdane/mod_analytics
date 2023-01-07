@@ -22,7 +22,7 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           options: |
             --inventory inventory
-            --extra-vars INFLUXDB_ROOT_PASSWORD=${{secrets.INFLUXDB_ROOT_PASSWORD}} 
-            --extra-vars INFLUXDB_GRAFANA_PASSWORD=${{secrets.INFLUXDB_GRAFANA_PASSWORD}} 
-            --extra-vars INFLUXDB_WRITE_DATA_PASSWORD=${{secrets.INFLUXDB_WRITE_DATA_PASSWORD}} 
+            --extra-vars INFLUXDB_ROOT_PASSWORD='${{secrets.INFLUXDB_ROOT_PASSWORD}}'
+            --extra-vars INFLUXDB_GRAFANA_PASSWORD='${{secrets.INFLUXDB_GRAFANA_PASSWORD}}'
+            --extra-vars INFLUXDB_WRITE_DATA_PASSWORD='${{secrets.INFLUXDB_WRITE_DATA_PASSWORD}}'
             --verbose
