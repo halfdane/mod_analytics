@@ -21,5 +21,6 @@ jobs:
           args: "ansible" # my ansible files in a folder
   run-playbook:
     runs-on: ubuntu-latest
+    needs: validate
     steps:
       - run: echo "henlo owrld"
