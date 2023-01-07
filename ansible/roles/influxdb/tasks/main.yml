@@ -11,12 +11,21 @@
 - name: Modify InfluxDB hostname
   replace:
     dest=/etc/influxdb/influxdb.conf
-    regexp='hostname = "localhost"'
-    replace='hostname = "{{ ansible_hostname }}"'
+    regexp='# auth-enabled = false'
+    replace='auth-enabled = true'
     backup=yes
 
 - name: Start the InfluxDB service
   service: name=influxdb state=restarted
+
+- name: Create admin user
+  command: /usr/bin/influx -execute 'CREATE USER admin WITH PASSWORD {{ INFLUXDB_ROOT_PASSWORD }} WITH ALL PRIVILEGES'
+
+- name: Create grafana user
+  command: /usr/bin/influx -execute 'CREATE USER grafana WITH PASSWORD {{ INFLUXDB_GRAFANA_PASSWORD }}'
+
+- name: Create python user
+  command: /usr/bin/influx -execute 'CREATE USER write_data WITH PASSWORD {{ INFLUXDB_WRITE_DATA_PASSWORD }}'
 
 - name: Create sample database
   command: /usr/bin/influx -execute 'CREATE DATABASE sample_database'
