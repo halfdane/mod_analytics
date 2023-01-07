@@ -23,7 +23,7 @@
 
 - name: Load some test data into sample database
   uri:
-    url: https://localhost:8086/write?db=sample_database
+    url: http://localhost:8086/write?db=sample_database
     method: POST
     body: "random_ints,host=server_{{ 10 | random }} value={{ 100 | random }}"
     status_code: 204
