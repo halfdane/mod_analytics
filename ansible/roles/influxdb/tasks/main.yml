@@ -19,7 +19,7 @@
   service: name=influxdb state=restarted
 
 - name: Create sample database
-  command: /opt/influxdb/influx -execute 'CREATE DATABASE sample_database'
+  command: /usr/bin/influx -execute 'CREATE DATABASE sample_database'
 
 - name: Load some test data into sample database
   uri:
