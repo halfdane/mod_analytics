@@ -29,21 +29,25 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Install dependencies Including Ansible
-        run: |
-          cd ansible
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
-      - name: write inventory to file
-        env:
-          INVENTORY: ${{ secrets.INVENTORY }}
-        run: 'echo "$INVENTORY" > inventory'
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_rsa # optional
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-          # config: ${{ secrets.CONFIG }} # ssh_config; optional
-          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+      - name: Run playbook
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        # Required, playbook filepath
+        playbook: hello-world.yaml
+        # Optional, directory where playbooks live
+        directory: ./ansible
+        # Optional, SSH private key
+        key: ${{secrets.SSH_KEY}}
+        # Optional, literal inventory file contents
+        inventory: |
+          [all]
+          example.com
+
+          [group1]
+          example.com
+        # Optional, additional flags to pass to ansible-playbook
+        options: |
+          --inventory .hosts
+          --limit group1
+          --extra-vars hello=there
+          --verbose
