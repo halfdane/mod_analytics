@@ -41,13 +41,8 @@ jobs:
           # Optional, literal inventory file contents
           inventory: |
             [all]
-            example.com
-
-            [group1]
-            example.com
+            83.229.85.245
           # Optional, additional flags to pass to ansible-playbook
           options: |
-            --inventory .hosts
-            --limit group1
             --extra-vars hello=there
             --verbose
