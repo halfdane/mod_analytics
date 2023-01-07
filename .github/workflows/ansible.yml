@@ -22,6 +22,5 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           options: |
             --inventory inventory
-            -u root
             --extra-vars hello=there
             --verbose

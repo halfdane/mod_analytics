@@ -17,3 +17,14 @@
 
 - name: Start the InfluxDB service
   service: name=influxdb state=restarted
+
+- name: Create sample database
+  command: /opt/influxdb/influx -execute 'CREATE DATABASE sample_database'
+
+- name: Load some test data into sample database
+  uri:
+    url: https://localhost:8086/write?db=sample_database
+    method: POST
+    body: "random_ints,host=server_{{ 10 | random }} value={{ 100 | random }}"
+    status_code: 204
+  with_sequence: start=1 end=10
