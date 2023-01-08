@@ -27,12 +27,13 @@ async def main():
         async for log in subreddit.mod.log(limit=5):
             json_body = [
                 {
-                    "measurement": "cpu_load_short",
+                    "measurement": "activity",
                     "tags": {
                         "mod": log.mod,
                         "action": log.action
                     },
-                    "time": log.created_utc,
+                    "time": int(log.created_utc),
+
                     "fields": {
                         "value": 1
                     }
