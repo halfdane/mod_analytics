@@ -226,6 +226,7 @@ endif
 
 $(VENV):
 	$(PY) -m venv $(VENVDIR)
+	echo "running the  thing"
 	$(VENV)/python -m pip install --upgrade pip setuptools wheel
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
