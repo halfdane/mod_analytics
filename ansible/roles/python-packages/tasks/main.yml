@@ -1,0 +1,7 @@
+---
+
+- name: Install venv
+  apt: 
+      name: python3-venv
+      state: present
+      update_cache: yes
