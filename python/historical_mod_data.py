@@ -1,6 +1,6 @@
 import asyncio
 import config
-from influxdb_client import InfluxDBClient
+from influxdb import InfluxDBClient
 
 import logging
 
@@ -21,8 +21,9 @@ async def main():
         print(f"Logged in as {redditor.name}")
 
         subreddit = await reddit.subreddit('SuperStonk')
-        client = InfluxDBClient(url="http://localhost:8086")
-        print(client.get_list_database())
+        client = InfluxDBClient(host="localhost", port=8086, database="sample_database")
+        result = client.query('select value from random_ints;')
+        print("Result: {0}".format(result))
         async for log in subreddit.mod.log(limit=5):
             print(f"Mod: {log.mod}, {log.action}, {log.created_utc}")
 

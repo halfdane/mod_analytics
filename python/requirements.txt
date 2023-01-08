@@ -1,2 +1,2 @@
 asyncpraw
-influxdb-client
+influxdb
