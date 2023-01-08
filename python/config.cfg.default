@@ -1,0 +1,15 @@
+##############################################
+## Mod Analytics Default Configuration File ##
+##############################################
+
+################################################################################
+# PRAW settings. These settings should match the values provided by your web   #
+# application you created at https://www.reddit.com/prefs/apps/                #
+################################################################################
+
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+
+REDDIT_USERNAME = '' 
+REDDIT_PASSWORD = '' 
+
