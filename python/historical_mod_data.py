@@ -1,5 +1,6 @@
-import config
 import asyncio
+import config
+
 import logging
 import re
 import sqlite3
@@ -10,19 +11,24 @@ from urllib.parse import urlparse
 
 import asyncpraw
 
-configuration = ModerationBotConfiguration()
-
 asyncreddit = asyncpraw.Reddit(
-    **configuration.qvbot_reddit_settings(),
-    user_agent="com.halfdane.superstonk_moderation_bot:v0.xx (by u/half_dane)")
+		client_id=config.CLIENT_ID,
+		client_secret=config.CLIENT_SECRET,
+        password=config.REDDIT_PASSWORD,
+        username=config.REDDIT_USERNAME,
+		user_agent="com.halfdane.superstonk_mod_analytics_bot:v0.xx (by u/half_dane)"
+	)
+
 
 async def main():
     async with asyncreddit as reddit:
         redditor = await reddit.user.me()
         print(f"Logged in as {redditor.name}")
 
-        for i in ['DRSyourGME']:
-            await handle_subreddit(await reddit.subreddit(i))
+        subreddit = await reddit.subreddit('SuperStonk')
+        async for log in subreddit.mod.log(limit=5):
+            print(f"Mod: {log.mod}, {log.action}, {log.created_utc}")
+
 
 
 
