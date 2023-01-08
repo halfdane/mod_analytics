@@ -1,0 +1,24 @@
+name: deploy
+on:
+# run with every push
+  push:
+# run if manually triggered
+  workflow_dispatch:
+# deploy on a recurring schedule to avoid OOM problems
+#  schedule:
+#    - cron: '15 */6 * * *'
+
+jobs:
+  deploy-live:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to live server via ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            systemctl --user restart mod_analytics.service
+            echo "That's all folks"
+
