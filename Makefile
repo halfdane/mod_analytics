@@ -6,7 +6,7 @@ dev: setup
 	$(VENV)/python python/historical_mod_data.py
 
 production: setup
-	run_it
+	$(VENV)/python python/historical_mod_data.py
 
 bot: force_pull production
 
