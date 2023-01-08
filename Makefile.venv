@@ -189,7 +189,7 @@ clean-venv:
 	-$(RMDIR) "$(VENVDIR)"
 
 .PHONY: show-venv
-show-venv: venvr
+show-venv: venv
 	@$(VENV)/python -c "import sys; print('Python ' + sys.version.replace('\n',''))"
 	@$(VENV)/pip --version
 	@echo venv: $(VENVDIR)
