@@ -1,0 +1,6 @@
+- name: Git checkout
+  become: yes
+  become_user: live
+  git:
+    repo: 'https://github.com/halfdane/mod_analytics.git'
+    dest: ~/mod_analytics

@@ -1,11 +1,11 @@
 ---
 
-- name: Template grafana-lib.sh
+- name: Prepare datasource file
   template:
     src: templates/sample.json
     dest: /tmp/
   
-- name: Template grafana-lib.sh
+- name: push datasource file to grafana
   shell: >
     curl -X "POST" "http://localhost:3000/api/datasources"     
     -H "Content-Type: application/json"      
