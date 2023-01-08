@@ -22,7 +22,7 @@ clean: clean-venv
 
 install:
 	mkdir -p ~/.config/systemd/user/
-	cp mod_analytics.service ~/.config/systemd/user/
+	cp python/mod_analytics.service ~/.config/systemd/user/
 	systemctl --user daemon-reload
 	systemctl --user enable mod_analytics.service
 	systemctl --user start mod_analytics.service
