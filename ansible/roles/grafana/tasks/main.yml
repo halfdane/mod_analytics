@@ -22,6 +22,13 @@
       state: present
       update_cache: yes
 
+- name: Activate InfluxDB authentication
+  replace:
+    dest=/etc/grafana/grafana.ini
+    regexp=';admin_password = admin'
+    replace=';admin_password = {{ GRAFANA_ADMIN_PASSWORD }}'
+    backup=yes
+
 - name: Enable and start grafana service
   service:
     name: grafana-server

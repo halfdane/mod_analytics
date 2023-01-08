@@ -1,0 +1,13 @@
+---
+
+- name: Template grafana-lib.sh
+  template:
+    src: templates/sample.json
+    dest: /tmp/
+  
+- name: Template grafana-lib.sh
+  shell: >
+    curl -X "POST" "http://localhost:3000/api/datasources"     
+    -H "Content-Type: application/json"      
+    --user admin:{{ GRAFANA_ADMIN_PASSWORD }}
+    --data-binary @/tmp/sample.json

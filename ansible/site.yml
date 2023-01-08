@@ -5,7 +5,9 @@
     - vars/external_vars.yml
 
   roles:
+    - ufw
     - influxdb
     - grafana
+    - grafana-datasource
     # - nginx
     # - python-server-metrics
