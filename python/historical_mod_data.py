@@ -1,13 +1,8 @@
 import asyncio
 import config
+from influxdb_client import InfluxDBClient
 
 import logging
-import re
-import sqlite3
-from datetime import date, datetime, timedelta
-from pprint import pprint
-from unittest.mock import MagicMock
-from urllib.parse import urlparse
 
 import asyncpraw
 
@@ -26,9 +21,10 @@ async def main():
         print(f"Logged in as {redditor.name}")
 
         subreddit = await reddit.subreddit('SuperStonk')
+        client = InfluxDBClient(url="http://localhost:8086")
+        print(client.get_list_database())
         async for log in subreddit.mod.log(limit=5):
             print(f"Mod: {log.mod}, {log.action}, {log.created_utc}")
-
 
 
 
