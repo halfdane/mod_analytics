@@ -25,6 +25,20 @@ async def main():
         result = client.query('select value from random_ints;')
         print("Result: {0}".format(result))
         async for log in subreddit.mod.log(limit=5):
+            json_body = [
+                {
+                    "measurement": "cpu_load_short",
+                    "tags": {
+                        "mod": log.mod,
+                        "action": log.action
+                    },
+                    "time": log.created_utc,
+                    "fields": {
+                        "value": 1
+                    }
+                }
+            ]
+            client.write_points(json_body)
             print(f"Mod: {log.mod}, {log.action}, {log.created_utc}")
 
 
