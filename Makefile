@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+REQUIREMENTS_TXT=python/requirements.txt
 
 .PHONY: dev production test clean setup force_pull bot
 dev: setup

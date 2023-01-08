@@ -1,3 +1,4 @@
+import config
 import asyncio
 import logging
 import re
