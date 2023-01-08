@@ -21,7 +21,7 @@ jobs:
         with:
           playbook: site.yml
           directory: ./ansible
-          key: ${{secrets.SSH_KEY}}
+          key: ${{secrets.ROOT_SSH_KEY}}
           options: |
             --inventory inventory
             --extra-vars INFLUXDB_ROOT_PASSWORD='${{secrets.INFLUXDB_ROOT_PASSWORD}}'
