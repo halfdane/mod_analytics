@@ -61,7 +61,7 @@ async def main():
             created = datetime.utcfromtimestamp(log.created_utc).strftime("%d.%m.%Y, %H:%M:%S")
             print(f"{created} ({log.created_utc})")
 
-            if log.created_utc > 1670630400:
+            if log.created_utc > 1670634013:
                 continue
 
             await asyncio.sleep(0.1)
