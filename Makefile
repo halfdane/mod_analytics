@@ -5,7 +5,7 @@ REQUIREMENTS_TXT=python/requirements.txt
 run: setup
 	$(VENV)/python python/historical_mod_data.py
 
-bot: force_pull production
+bot: force_pull run
 
 force_pull:
 	git fetch --all

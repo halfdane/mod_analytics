@@ -61,10 +61,10 @@ async def main():
             created = datetime.utcfromtimestamp(log.created_utc).strftime("%d.%m.%Y, %H:%M:%S")
             print(f"{created} ({log.created_utc})")
 
-            if log.created_utc > 1670634013:
+            if log.created_utc > 1666994476:
                 continue
 
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.001)
             client.write_points([to_json(log)])
 
 
