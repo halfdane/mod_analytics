@@ -14,6 +14,19 @@ asyncreddit = asyncpraw.Reddit(
 		user_agent="com.halfdane.superstonk_mod_analytics_bot:v0.xx (by u/half_dane)"
 	)
 
+def to_json(item):
+    return {
+            "measurement": "activity",
+            "tags": {
+                "mod": item.mod,
+                "action": item.action
+            },
+            "time": int(item.created_utc),
+            "fields": {
+                "value": 1
+            }
+        }
+    
 
 async def main():
     async with asyncreddit as reddit:
@@ -24,23 +37,9 @@ async def main():
         client = InfluxDBClient(host="localhost", port=8086, database="sample_database")
         result = client.query('select value from random_ints;')
         print("Result: {0}".format(result))
-        async for log in subreddit.mod.log(limit=5):
-            json_body = [
-                {
-                    "measurement": "activity",
-                    "tags": {
-                        "mod": log.mod,
-                        "action": log.action
-                    },
-                    "time": int(log.created_utc),
-
-                    "fields": {
-                        "value": 1
-                    }
-                }
-            ]
-            client.write_points(json_body)
-            print(f"Mod: {log.mod}, {log.action}, {log.created_utc}")
+        points = [to_json(log) async for log in subreddit.mod.log(limit=100)]
+        client.write_points(points)
+        print(points)
 
 
 
