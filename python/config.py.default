@@ -3,6 +3,12 @@
 ##############################################
 
 ################################################################################
+# Change this to anything else if there's no influxdb available                #
+################################################################################
+
+ENVIRONMENT = 'production'
+
+################################################################################
 # PRAW settings. These settings should match the values provided by your web   #
 # application you created at https://www.reddit.com/prefs/apps/                #
 ################################################################################

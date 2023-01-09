@@ -2,8 +2,9 @@ import asyncio
 import config
 from influxdb import InfluxDBClient
 
-import logging
+from datetime import datetime
 
+import logging
 import asyncpraw
 
 asyncreddit = asyncpraw.Reddit(
@@ -14,12 +15,33 @@ asyncreddit = asyncpraw.Reddit(
 		user_agent="com.halfdane.superstonk_mod_analytics_bot:v0.xx (by u/half_dane)"
 	)
 
+class InfluxDBClientWrapper():
+    client = None
+
+    def __init__(self, host, port, database) -> None:
+        if config.ENVIRONMENT == "production":
+            self.client = InfluxDBClient(host=host, port=port, database=database)
+    
+    def write_points(self, points):
+        if self.client is not None:
+            self.client.write_points(points=points)
+        else:
+            print(points)
+    
+
 def to_json(item):
+    created = datetime.utcfromtimestamp(item.created_utc).strftime("%d.%m.%Y, %H:%M:%S")
+    print(created)
     return {
-            "measurement": "activity",
+            "measurement": "mod_activity",
             "tags": {
                 "mod": item.mod.name,
-                "action": item.action
+                "action": item.action,
+                "fullname":  item.target_fullname,
+                "author": item.target_author,
+                "description": item.description,
+                "details": item.details,
+                "type": "post" 
             },
             "time": int(item.created_utc)*1_000_000_000,
             "fields": {
@@ -34,10 +56,11 @@ async def main():
         print(f"Logged in as {redditor.name}")
 
         subreddit = await reddit.subreddit('SuperStonk')
-        client = InfluxDBClient(host="localhost", port=8086, database="sample_database")
-        points = [to_json(log) async for log in subreddit.mod.log(limit=)]
-        client.write_points(points)
-        print(points)
+        client = InfluxDBClientWrapper(host="localhost", port=8086, database="sample_database")
+        async for log in subreddit.mod.log(limit=None):
+            client.write_points([to_json(log)])
+
+
 
 
 

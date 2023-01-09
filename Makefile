@@ -1,11 +1,8 @@
 SHELL := /bin/bash
 REQUIREMENTS_TXT=python/requirements.txt
 
-.PHONY: dev production test clean setup force_pull bot
-dev: setup
-	$(VENV)/python python/historical_mod_data.py
-
-production: setup
+.PHONY: run test clean setup force_pull bot
+run: setup
 	$(VENV)/python python/historical_mod_data.py
 
 bot: force_pull production
