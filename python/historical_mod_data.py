@@ -21,7 +21,7 @@ def to_json(item):
                 "mod": item.mod,
                 "action": item.action
             },
-            "time": int(item.created_utc),
+            "time": int(item.created_utc)*1_000_000_000,
             "fields": {
                 "value": 1
             }
