@@ -19,6 +19,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            systemctl --user restart mod_analytics.service
+            # systemctl --user restart mod_analytics.service
             echo "That's all folks"
 

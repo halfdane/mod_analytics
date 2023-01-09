@@ -18,7 +18,7 @@ def to_json(item):
     return {
             "measurement": "activity",
             "tags": {
-                "mod": item.mod,
+                "mod": item.mod.name,
                 "action": item.action
             },
             "time": int(item.created_utc)*1_000_000_000,
@@ -35,9 +35,7 @@ async def main():
 
         subreddit = await reddit.subreddit('SuperStonk')
         client = InfluxDBClient(host="localhost", port=8086, database="sample_database")
-        result = client.query('select value from random_ints;')
-        print("Result: {0}".format(result))
-        points = [to_json(log) async for log in subreddit.mod.log(limit=100)]
+        points = [to_json(log) async for log in subreddit.mod.log(limit=)]
         client.write_points(points)
         print(points)
 
