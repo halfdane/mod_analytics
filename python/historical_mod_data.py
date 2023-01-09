@@ -58,6 +58,7 @@ async def main():
         subreddit = await reddit.subreddit('SuperStonk')
         client = InfluxDBClientWrapper(host="localhost", port=8086, database="sample_database")
         async for log in subreddit.mod.log(limit=None):
+            await asyncio.sleep(0.1)
             client.write_points([to_json(log)])
 
 
