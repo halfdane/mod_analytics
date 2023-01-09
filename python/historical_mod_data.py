@@ -58,6 +58,12 @@ async def main():
         subreddit = await reddit.subreddit('SuperStonk')
         client = InfluxDBClientWrapper(host="localhost", port=8086, database="sample_database")
         async for log in subreddit.mod.log(limit=None):
+            created = datetime.utcfromtimestamp(item.created_utc).strftime("%d.%m.%Y, %H:%M:%S")
+            print(f"{created} ({item.created_utc})")
+
+            if item.created_utc > 1670630400:
+                continue
+
             await asyncio.sleep(0.1)
             client.write_points([to_json(log)])
 
